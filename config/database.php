@@ -1,14 +1,26 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "library_management";
+class Database {
+    private $servername = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $dbname = "library_management";
+    private $conn;
 
-// Tạo kết nối
-$conn = new mysqli($servername, $username, $password, $dbname);
+    public function connect() {
+        try {
+            // DSN
+            $dsn = "mysql:host={$this->servername};dbname={$this->dbname};charset=utf8mb4";
 
-// Kiểm tra kết nối
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
+            // Tạo PDO
+            $this->conn = new PDO($dsn, $this->username, $this->password);
+
+            // Bật chế độ Exception
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            return $this->conn;
+
+        } catch (PDOException $e) {
+            die("Kết nối CSDL thất bại: " . $e->getMessage());
+        }
+    }
 }
-echo "Kết nối thành công!";

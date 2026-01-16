@@ -4,17 +4,20 @@ session_start();
 require_once '../config/database.php';
 require_once '../models/User.php';
 
-class AuthController {
+class AuthController
+{
     private $userModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $database = new Database();
         $db = $database->connect();
         $this->userModel = new UserModel($db);
     }
 
     // SCRUM-71
-    public function login() {
+    public function login()
+    {
         $username = trim($_POST['username'] ?? '');
         $password = $_POST['password'] ?? '';
 
@@ -52,6 +55,21 @@ class AuthController {
         } else {
             header("Location: ../views/member/home.php");
         }
+        exit();
+    }
+    public function logout()
+    {
+        // Khởi tạo session nếu chưa có
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // AC 2: Xóa tất cả dữ liệu session và hủy session
+        $_SESSION = array();
+        session_destroy();
+
+        // AC 3: Điều hướng về trang Login hoặc Home
+        header("Location: /library_project/public/login");
         exit();
     }
 }

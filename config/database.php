@@ -1,27 +1,19 @@
 <?php
-class Database
+// Hàm trả về kết nối PDO đến DB
+function getDB()
 {
-    private $servername = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $dbname = "library_management";
-    private $conn;
+    $host = '127.0.0.1'; // Hoặc 'localhost'
+    $dbname = 'library_management'; // Từ dump SQL
+    $username = 'root'; // Thay nếu khác
+    $password = ''; // Thay nếu có pass
 
-    public function connect()
-    {
-        try {
-            // DSN
-            $dsn = "mysql:host={$this->servername};dbname={$this->dbname};charset=utf8mb4";
-
-            // Tạo PDO
-            $this->conn = new PDO($dsn, $this->username, $this->password);
-
-            // Bật chế độ Exception
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            return $this->conn;
-        } catch (PDOException $e) {
-            die("Kết nối CSDL thất bại: " . $e->getMessage());
-        }
+    try {
+        $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Bật error reporting
+        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // Fetch assoc mặc định
+        return $db;
+    } catch (PDOException $e) {
+        // Die với message (hoặc log error)
+        die("Kết nối DB thất bại: " . $e->getMessage());
     }
 }

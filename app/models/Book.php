@@ -1,56 +1,48 @@
 <?php
-
-/**
- * File: app/models/Book.php
- * Chịu trách nhiệm truy vấn dữ liệu Sách và Bản sao (Book Copies)
- */
+// Lớp model cho sách, xử lý các truy vấn liên quan đến sách và danh mục
 
 class Book
 {
     private $db;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        require_once 'config/database.php';
+        $this->db = getDB(); // Giả định getDB() trả về kết nối PDO từ config/database.php
     }
 
-    /**
-     * Lấy danh sách sách có phân trang và đếm số bản sao 'Available'
-     * Đáp ứng AC 3 & AC 4
-     */
-    public function getBooksWithPagination($page = 1, $limit = 15)
+    // Lấy tất cả danh mục sách
+    public function getCategories()
     {
-        try {
-            $offset = ($page - 1) * $limit;
-
-            // Truy vấn lấy thông tin sách và đếm số bản sao có trạng thái 'Available'
-            $sql = "SELECT b.*, 
-                    (SELECT COUNT(*) FROM book_copies bc WHERE bc.book_id = b.id AND bc.status = 'Available') as stock_count 
-                    FROM books b 
-                    LIMIT :limit OFFSET :offset";
-
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-            $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error fetching books: " . $e->getMessage());
-            return [];
-        }
+        $stmt = $this->db->query("SELECT * FROM categories");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Đếm tổng số đầu sách để tính toán số trang (AC 4)
-     */
-    public function getTotalBooksCount()
+    // Lấy tổng số sách để tính toán phân trang
+    public function getTotalBooks()
     {
-        try {
-            $sql = "SELECT COUNT(*) FROM books";
-            return (int)$this->db->query($sql)->fetchColumn();
-        } catch (PDOException $e) {
-            return 0;
-        }
+        $stmt = $this->db->query("SELECT COUNT(*) FROM books");
+        return $stmt->fetchColumn();
+    }
+
+    // Lấy danh sách sách với phân trang, sử dụng LIMIT và OFFSET
+    // Bao gồm thông tin stock: available/total copies
+    public function getBooks($page = 1)
+    {
+        $limit = 15;
+        $offset = ($page - 1) * $limit;
+        $query = "SELECT b.book_id, b.title, b.author, c.category_name, b.image_url,
+                         COUNT(bc.book_copy_id) AS total_copies,
+                         SUM(CASE WHEN bc.status = 'available' THEN 1 ELSE 0 END) AS available
+                  FROM books b
+                  LEFT JOIN categories c ON b.category_id = c.category_id
+                  LEFT JOIN book_copies bc ON b.book_id = bc.book_id
+                  GROUP BY b.book_id
+                  LIMIT :limit OFFSET :offset";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

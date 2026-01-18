@@ -1,7 +1,7 @@
 <?php
 // Lớp controller cho thành viên, xử lý logic trang chủ khi chưa đăng nhập
 
-require_once 'models/Book.php';
+require_once __DIR__ . '/../models/Book.php'; // Path từ app/controllers/ lên app/ rồi vào app/models/
 
 class MemberController
 {
@@ -19,7 +19,10 @@ class MemberController
         $totalPages = ceil($total / 15);
         $categories = $bookModel->getCategories();
 
+        // Debug data (bỏ comment nếu cần test)
+        // var_dump($books); exit();
+
         // Chuyển dữ liệu sang view
-        require_once 'views/members/index.php';
+        require_once __DIR__ . '/../../views/members/index.php'; // Path từ app/controllers/ lên root rồi vào views/members/
     }
 }

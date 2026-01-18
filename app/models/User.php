@@ -10,7 +10,7 @@ class UserModel {
     public function findByUsername($username) {
         $sql = "SELECT user_id, username, password, role, status 
                 FROM users 
-                WHERE username = :username 
+                WHERE username = :username OR email = :username
                 LIMIT 1";
 
         $stmt = $this->conn->prepare($sql);

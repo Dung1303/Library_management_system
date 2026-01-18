@@ -112,7 +112,16 @@
             <p>Đăng ký để tham quan thư viện</p>
         </div>
         <div class="card-body">
-            <form action="" method="POST">
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?= $error; ?>
+                </div>
+            <?php endif; ?>
+            <form action="/Library_management_system/public/index.php?url=register/register" method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Tên đăng nhập</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập" required>
+                </div>
                 <div class="mb-3">
                     <label for="full_name" class="form-label">Họ và tên</label>
                     <input type="text" class="form-control" id="full_name" name="full_name" placeholder="VD: Nguyễn Văn A" required>

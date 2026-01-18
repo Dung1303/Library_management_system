@@ -12,6 +12,9 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
     body {
         min-height: 100vh;
@@ -76,12 +79,12 @@
             </div>
             <?php unset($_SESSION['login_error']); endif; ?>
 
-            <form method="POST" action="../controllers/AuthController.php?action=login">
+            <form method="POST" action="/Library_management_system/public/index.php?url=auth/login">
 
                 <!-- Email / Username -->
                 <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="text" name="username" class="form-control" placeholder="your@email.com" required>
+                    <label class="form-label">Tên đăng nhập hoặc Email</label>
+                    <input type="text" name="username" class="form-control" placeholder="Nhập tên đăng nhập hoặc email" required>
                 </div>
 
                 <!-- Password -->
@@ -101,7 +104,7 @@
                     <a href="#" class="text-decoration-none">Quên mật khẩu?</a>
                     <span>
                         Chưa có tài khoản?
-                        <a href="#" class="text-decoration-none">Đăng kí</a>
+                        <a href="register.php" class="text-decoration-none">Đăng kí</a>
                     </span>
                 </div>
 
@@ -131,7 +134,17 @@
         }
     }
     </script>
-
+    <script>
+        <?php if (isset($_SESSION['register_success'])): ?>
+            Swal.fire({
+                title: 'Đăng ký thành công!',
+                text: '<?= $_SESSION['register_success']; ?>',
+                icon: 'success',
+                confirmButtonColor: '#36d1dc'
+            });
+            // Xóa session sau khi đã hiển thị để không hiện lại khi F5
+            <?php unset($_SESSION['register_success']); ?>
+        <?php endif; ?>
+    </script>
 </body>
-
 </html>

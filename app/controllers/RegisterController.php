@@ -1,6 +1,6 @@
 <?php
 // Sửa đường dẫn cho đúng cấu trúc thư mục bạn gửi
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Notification.php';
 
@@ -9,10 +9,11 @@ class RegisterController {
     private $notificationModel;
     private $db;
 
-    public function __construct($db) {
-        $this->db = $db;
-        $this->userModel = new UserModel($db);
-        $this->notificationModel = new NotificationModel($db);
+    public function __construct() {
+        $database = new Database();
+        $this->db = $database->getConnection();
+        $this->userModel = new UserModel($this->db);
+        $this->notificationModel = new NotificationModel($this->db);
     }
 
     public function register() {
@@ -34,21 +35,27 @@ class RegisterController {
                 if ($this->userModel->register($username, $password, $fullName, $email)) {
                     $user = $this->userModel->findByUsername($username);
                     $this->notificationModel->create($user['user_id'], 'register');
-                    header('Location: login.php'); // Sau khi xong về login
-                    exit;
+                    $this->redirectLoginWithSuccess();
                 }
                 $error = "Đăng ký thất bại";
             }
         }
         // Hiển thị view
-        require __DIR__ . '/../views/auth/register.php';
+        require __DIR__ . '/../../views/auth/register.php';
+    }
+
+    /**
+     * Hàm thông báo và chuyển hướng sau khi đăng ký thành công
+     */
+    private function redirectLoginWithSuccess() {
+        // Khởi tạo session nếu chưa có
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Lưu thông báo vào session (Flash Message)
+        $_SESSION['register_success'] = "Chúc mừng! Bạn đã đăng ký tài khoản thành công. Vui lòng đăng nhập.";
+        session_write_close();
+        header('Location: /Library_management_system/views/auth/login.php');
+        exit;
     }
 }
-
-// LỆNH KÍCH HOẠT QUAN TRỌNG:
-// Sửa lại dòng này nếu bạn giữ tên hàm là connect()
-$database = new Database();
-$db = $database->connect(); // Gọi connect() thay vì getConnection()
-
-$controller = new RegisterController($db);
-$controller->register();

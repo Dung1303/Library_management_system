@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Library - Browse Books</title>
     <link rel="stylesheet" href="/css/members.css">
+    <link rel="stylesheet" href="/css/layout.css">
 </head>
 
 <body>
+    <?php require_once __DIR__ . '/../layouts/header.php'; ?>
+
     <!-- Banner chào mừng -->
     <section class="welcome-banner">
         <div class="container">
@@ -171,6 +174,7 @@
             <?php endif; ?>
         </div>
     </section>
+    <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 </body>
 
 </html>

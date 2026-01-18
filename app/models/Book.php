@@ -9,7 +9,8 @@ class Book
     public function __construct()
     {
         require_once __DIR__ . '/../../config/database.php';
-        $this->db = getDB();
+        $database = new Database();
+        $this->db = $database->connect(); // $this->db là PDO
     }
 
     /**

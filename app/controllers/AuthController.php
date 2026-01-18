@@ -69,7 +69,7 @@ class AuthController
         session_destroy();
 
         // AC 3: Điều hướng về trang Login hoặc Home
-        header("Location: ../../../../public/index.php");
+        header("Location: ../../../../views/auth/login.php");
         exit();
     }
 }

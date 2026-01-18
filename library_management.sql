@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2026 at 12:41 PM
+-- Generation Time: Jan 18, 2026 at 01:56 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,26 +40,26 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`book_id`, `title`, `author`, `category_id`, `image_url`) VALUES
-(1, 'Clean Code', 'Robert C. Martin', 1, 'book1.jpg'),
-(2, 'Design Patterns', 'Gang of Four', 1, 'book2.jpg'),
-(3, 'Đắc Nhân Tâm', 'Dale Carnegie', 4, 'book3.jpg'),
-(4, 'Nhà Giả Kim', 'Paulo Coelho', 3, 'book4.jpg'),
-(5, 'Cha Giàu Cha Nghèo', 'Robert Kiyosaki', 2, 'book5.jpg'),
-(6, 'Lập trình PHP MVC', 'John Smith', 1, 'book6.jpg'),
-(7, 'Dế Mèn Phiêu Lưu Ký', 'Tô Hoài', 3, 'book7.jpg'),
-(8, 'Tư duy nhanh chậm', 'Daniel Kahneman', 4, 'book8.jpg'),
-(9, 'Kinh tế học vĩ mô', 'Paul Samuelson', 2, 'book9.jpg'),
-(10, 'Giải thuật cơ bản', 'Lê Văn A', 1, 'book10.jpg'),
-(11, 'Vũ trụ sơ khai', 'Stephen Hawking', 5, 'book11.jpg'),
-(12, 'Lịch sử vạn vật', 'Bill Bryson', 5, 'book12.jpg'),
-(13, 'Quản trị kinh doanh', 'Trần Văn B', 2, 'book13.jpg'),
-(14, 'Kỹ năng giao tiếp', 'Nguyễn Thị C', 4, 'book14.jpg'),
-(15, 'Suối nguồn', 'Ayn Rand', 3, 'book15.jpg'),
-(16, 'Mắt biếc', 'Nguyễn Nhật Ánh', 3, 'book16.jpg'),
-(17, 'Tôi thấy hoa vàng', 'Nguyễn Nhật Ánh', 3, 'book17.jpg'),
-(18, 'Lập trình Python', 'Guido van Rossum', 1, 'book18.jpg'),
-(19, 'Trí tuệ nhân tạo', 'Andrew Ng', 1, 'book19.jpg'),
-(20, 'Dữ liệu lớn', 'Hoàng Văn D', 1, 'book20.jpg');
+(1, 'Clean Code', 'Robert C. Martin', 1, 'CleanCode.png'),
+(2, 'Design Patterns', 'Gang of Four', 1, 'DesignPatterns.png'),
+(3, 'Đắc Nhân Tâm', 'Dale Carnegie', 4, 'DacNhanTam.png'),
+(4, 'Nhà Giả Kim', 'Paulo Coelho', 3, 'NhaGiaKim.png'),
+(5, 'Cha Giàu Cha Nghèo', 'Robert Kiyosaki', 2, 'Chagiauchangheo.png'),
+(6, 'Lập trình PHP MVC', 'John Smith', 1, 'LapTrinhPHP MVC.png'),
+(7, 'Dế Mèn Phiêu Lưu Ký', 'Tô Hoài', 3, 'Dế Mèn Phiêu Lưu Ký.png'),
+(8, 'Tư duy nhanh chậm', 'Daniel Kahneman', 4, 'Tư duy nhanh chậm.png'),
+(9, 'Kinh tế học vĩ mô', 'Paul Samuelson', 2, 'Kinh tế học vĩ mô.png'),
+(10, 'Giải thuật cơ bản', 'Lê Văn A', 1, 'Giải thuật cơ bản.png'),
+(11, 'Vũ trụ sơ khai', 'Stephen Hawking', 5, 'Vũ trụ sơ khai.png'),
+(12, 'Lịch sử vạn vật', 'Bill Bryson', 5, 'Lịch sử vạn vật.png'),
+(13, 'Quản trị kinh doanh', 'Trần Văn B', 2, 'Quản trị kinh doanh.png'),
+(14, 'Kỹ năng giao tiếp', 'Nguyễn Thị C', 4, 'Kỹ năng giao tiếp.png'),
+(15, 'Suối nguồn', 'Ayn Rand', 3, 'Suối nguồn.png'),
+(16, 'Mắt biếc', 'Nguyễn Nhật Ánh', 3, 'Mắt biếc.png'),
+(17, 'Tôi thấy hoa vàng', 'Nguyễn Nhật Ánh', 3, 'Tôi thấy hoa vàng.png'),
+(18, 'Lập trình Python', 'Guido van Rossum', 1, 'Lập trình Python.png'),
+(19, 'Trí tuệ nhân tạo', 'Andrew Ng', 1, 'Trí tuệ nhân tạo.png'),
+(20, 'Dữ liệu lớn', 'Hoàng Văn D', 1, 'Dữ liệu lớn.png');
 
 -- --------------------------------------------------------
 

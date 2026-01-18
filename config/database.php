@@ -7,7 +7,7 @@ function getDB()
     $dbname = 'library_management'; // Tên database từ dump SQL
     $username = 'root'; // Username MySQL (thường là 'root' cho localhost)
     $password = ''; // Password MySQL - Mặc định là rỗng cho XAMPP/WAMP localhost
-    
+
     // Nếu bạn có password, đổi thành: $password = 'your_password';
 
     try {
@@ -16,7 +16,7 @@ function getDB()
         $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         return $db;
     } catch (PDOException $e) {
-        die("Kết nối DB thất bại: " . $e->getMessage() . 
+        die("Kết nối DB thất bại: " . $e->getMessage() .
             "<br><br><strong>Hướng dẫn:</strong><br>" .
             "1. Kiểm tra MySQL/MariaDB đã chạy chưa<br>" .
             "2. Kiểm tra username và password trong file config/database.php<br>" .

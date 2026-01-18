@@ -20,29 +20,35 @@
     <!-- Phần tìm kiếm và lọc -->
     <section class="search-section" id="books">
         <div class="container">
-            <div class="search-filter-wrapper">
+            <form method="GET" action="index.php" class="search-filter-wrapper">
                 <!-- Ô tìm kiếm -->
                 <div class="search-box">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <circle cx="11" cy="11" r="8" />
                         <path d="M21 21l-4.35-4.35" />
                     </svg>
-                    <input type="text" placeholder="Search by book title or author name" id="searchInput">
+                    <input type="text"
+                        name="search"
+                        placeholder="Search by book title or author name"
+                        value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                 </div>
 
                 <!-- Dropdown lọc theo danh mục -->
                 <div class="category-dropdown">
-                    <select id="categoryFilter">
+                    <select name="category" onchange="this.form.submit()">
                         <option value="">All Categories</option>
                         <?php foreach ($categories as $cat): ?>
-                            <option value="<?= $cat['category_id'] ?>"><?= htmlspecialchars($cat['category_name']) ?></option>
+                            <option value="<?php echo $cat['category_id']; ?>"
+                                <?php echo (isset($_GET['category']) && $_GET['category'] == $cat['category_id']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($cat['category_name']); ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M5 7l5 5 5-5H5z" />
                     </svg>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -59,7 +65,7 @@
                         <line x1="24" y1="36" x2="32" y2="36" />
                     </svg>
                     <p>No books available in this category.</p>
-                    <a href="/" class="btn-back">View All Books</a>
+                    <a href="index.php" class="btn-back">View All Books</a>
                 </div>
             <?php else: ?>
                 <!-- Grid 5 cột hiển thị sách -->
@@ -69,8 +75,8 @@
                         <div class="book-card">
                             <!-- Ảnh bìa sách -->
                             <div class="book-image">
-                                <img src="/public/images/<?= htmlspecialchars($book['image_url']) ?>"
-                                    alt="<?= htmlspecialchars($book['title']) ?>"
+                                <img src="/public/images/<?php echo htmlspecialchars($book['image_url']); ?>"
+                                    alt="<?php echo htmlspecialchars($book['title']); ?>"
                                     onerror="this.src='/public/images/default-book.jpg'">
                                 <!-- Badge "Hết hàng" nếu không còn sách -->
                                 <?php if ($book['available'] <= 0): ?>
@@ -81,7 +87,7 @@
                             <!-- Thông tin sách -->
                             <div class="book-info">
                                 <!-- Tiêu đề sách -->
-                                <h3 class="book-title"><?= htmlspecialchars($book['title']) ?></h3>
+                                <h3 class="book-title"><?php echo htmlspecialchars($book['title']); ?></h3>
 
                                 <!-- Thông tin tác giả -->
                                 <div class="book-meta">
@@ -89,14 +95,14 @@
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                             <path d="M8 2C9.1 2 10 2.9 10 4C10 5.1 9.1 6 8 6C6.9 6 6 5.1 6 4C6 2.9 6.9 2 8 2ZM8 12C10.7 12 14 13.3 14 14V15H2V14C2 13.3 5.3 12 8 12Z" />
                                         </svg>
-                                        <span><?= htmlspecialchars($book['author']) ?></span>
+                                        <span><?php echo htmlspecialchars($book['author']); ?></span>
                                     </div>
                                 </div>
 
                                 <!-- Badge danh mục sách -->
                                 <div class="book-category-badge">
-                                    <span class="badge <?= getBadgeClass($book['category_id']) ?>">
-                                        <?= htmlspecialchars($book['category_name']) ?>
+                                    <span class="badge <?php echo getBadgeClass($book['category_id']); ?>">
+                                        <?php echo htmlspecialchars($book['category_name']); ?>
                                     </span>
                                 </div>
 
@@ -104,11 +110,13 @@
                                 <div class="book-footer">
                                     <div class="stock-info">
                                         <span class="stock-label">Available:</span>
-                                        <span class="stock-value <?= $book['available'] > 0 ? 'in-stock' : 'out-of-stock' ?>">
-                                            <?= $book['available'] ?>/<?= $book['total_copies'] ?> copies
+                                        <span class="stock-value <?php echo $book['available'] > 0 ? 'in-stock' : 'out-of-stock'; ?>">
+                                            <?php echo $book['available']; ?>/<?php echo $book['total_copies']; ?> copies
                                         </span>
                                     </div>
-                                    <button class="btn-detail">View Details</button>
+                                    <button class="btn-detail" onclick="alert('Book ID: <?php echo $book['book_id']; ?>')">
+                                        View Details
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +128,8 @@
                     <div class="pagination">
                         <!-- Nút Previous -->
                         <?php if ($page > 1): ?>
-                            <a href="?page=<?= $page - 1 ?>" class="page-btn prev-btn">Previous</a>
+                            <a href="?page=<?php echo $page - 1; ?><?php echo isset($_GET['category']) && $_GET['category'] !== '' ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="page-btn prev-btn">Previous</a>
                         <?php endif; ?>
 
                         <?php
@@ -130,7 +139,8 @@
 
                         // Hiển thị trang đầu và dấu ...
                         if ($start > 1): ?>
-                            <a href="?page=1" class="page-btn">1</a>
+                            <a href="?page=1<?php echo isset($_GET['category']) && $_GET['category'] !== '' ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="page-btn">1</a>
                             <?php if ($start > 2): ?>
                                 <span class="page-dots">...</span>
                             <?php endif; ?>
@@ -138,7 +148,8 @@
 
                         <!-- Hiển thị các số trang -->
                         <?php for ($i = $start; $i <= $end; $i++): ?>
-                            <a href="?page=<?= $i ?>" class="page-btn <?= $i === $page ? 'active' : '' ?>"><?= $i ?></a>
+                            <a href="?page=<?php echo $i; ?><?php echo isset($_GET['category']) && $_GET['category'] !== '' ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="page-btn <?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
                         <?php endfor; ?>
 
                         <!-- Hiển thị dấu ... và trang cuối -->
@@ -146,12 +157,14 @@
                             <?php if ($end < $totalPages - 1): ?>
                                 <span class="page-dots">...</span>
                             <?php endif; ?>
-                            <a href="?page=<?= $totalPages ?>" class="page-btn"><?= $totalPages ?></a>
+                            <a href="?page=<?php echo $totalPages; ?><?php echo isset($_GET['category']) && $_GET['category'] !== '' ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="page-btn"><?php echo $totalPages; ?></a>
                         <?php endif; ?>
 
                         <!-- Nút Next -->
                         <?php if ($page < $totalPages): ?>
-                            <a href="?page=<?= $page + 1 ?>" class="page-btn next-btn">Next</a>
+                            <a href="?page=<?php echo $page + 1; ?><?php echo isset($_GET['category']) && $_GET['category'] !== '' ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) && $_GET['search'] !== '' ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="page-btn next-btn">Next</a>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
@@ -163,16 +176,20 @@
 </html>
 
 <?php
-// Hàm helper để trả về class màu cho badge danh mục
+/**
+ * Hàm helper để trả về class màu cho badge danh mục
+ * @param int $categoryId - ID của danh mục
+ * @return string - Class CSS tương ứng
+ */
 function getBadgeClass($categoryId)
 {
-    $classes = [
+    $classes = array(
         1 => 'badge-blue',    // Công nghệ thông tin
         2 => 'badge-green',   // Kinh tế
         3 => 'badge-pink',    // Văn học
         4 => 'badge-purple',  // Kỹ năng
         5 => 'badge-orange'   // Khoa học
-    ];
-    return $classes[$categoryId] ?? 'badge-blue';
+    );
+    return isset($classes[$categoryId]) ? $classes[$categoryId] : 'badge-blue';
 }
 ?>

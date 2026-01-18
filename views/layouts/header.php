@@ -66,8 +66,8 @@
                      </div>
 
 
-                     <a href="/logout" class="btn btn-danger btn-sm">
-                         Logout
+                     <a href="/auth/login.php" class="btn btn-danger btn-sm">
+                         Login
                      </a>
                  </div>
              </div>

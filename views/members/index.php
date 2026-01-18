@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Library - Browse Books</title>
     <link rel="stylesheet" href="/css/members.css">
-    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/layouts.css">
 </head>
 
 <body>

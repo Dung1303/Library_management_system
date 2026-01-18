@@ -23,21 +23,21 @@ class AuthController {
 
         if (!$user) {
             $_SESSION['login_error'] = "Invalid username or password";
-            header("Location: ../views/login.php");
+            header("Location: ../views/auth/login.php");
             exit();
         }
 
         // 2. Kiểm tra trạng thái tài khoản
         if ($user['status'] !== 'active') {
             $_SESSION['login_error'] = "Account is locked";
-            header("Location: ../views/login.php");
+            header("Location: ../views/auth/login.php");
             exit();
         }
 
         // 3. Check password (SCRUM-71)
         if (!password_verify($password, $user['password'])) {
             $_SESSION['login_error'] = "Invalid username or password";
-            header("Location: ../views/login.php");
+            header("Location: ../views/auth/login.php");
             exit();
         }
 
@@ -47,7 +47,7 @@ class AuthController {
         $_SESSION['role'] = $user['role'];
 
         // 5. Redirect theo role
-        if ($user['role'] === 'admin') {
+        if ($user['role'] === 'admin') {    
             header("Location: ../views/admin/dashboard.php");
         } else {
             header("Location: ../views/member/home.php");

@@ -1,0 +1,214 @@
+/* ==========================================
+   CSS VARIABLES & COLOR SCHEME
+   ========================================== */
+:root {
+    --primary-color: #0d6efd;
+    --primary-light: #e7f1ff;
+    --primary-dark: #1c64ab;
+    --dark-bg: #212529;
+    --text-light: #cccccc;
+    --text-lighter: #aaaaaa;
+    --text-white: #ffffff;
+    --text-dark: #333333;
+    
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   HEADER - Navigation & Logo
+   ========================================== */
+
+/**
+ * Logo icon styling
+ */
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-radius: var(--border-radius);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+/**
+ * Navbar styling - responsive and clean
+ */
+.navbar {
+    background-color: var(--text-white) !important;
+    box-shadow: var(--shadow);
+    padding: 12px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--text-dark) !important;
+    font-size: 20px;
+}
+
+.navbar-brand img {
+    border-radius: var(--border-radius);
+    transition: transform var(--transition-speed) ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+/**
+ * Custom navigation items
+ */
+.nav-item-custom {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed) ease,
+                color var(--transition-speed) ease;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-item-custom.active,
+.nav-item-custom:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-color) !important;
+}
+
+/* ==========================================
+   FOOTER - Complete Styling
+   ========================================== */
+
+/**
+ * Main footer container
+ */
+.footer {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark-bg) 100%);
+    color: var(--text-light);
+    font-size: 14px;
+    padding: 60px 0 20px;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/**
+ * Footer section titles
+ */
+.footer-title {
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 20px;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+/**
+ * Footer paragraph text
+ */
+.footer-text {
+    line-height: 1.8;
+    font-size: 14px;
+    color: var(--text-light);
+}
+
+/**
+ * Footer lists
+ */
+.footer-links,
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/**
+ * Footer list items
+ */
+.footer-links li,
+.footer-list li {
+    margin-bottom: 12px;
+    transition: transform var(--transition-speed) ease;
+}
+
+.footer-links li:hover {
+    transform: translateX(4px);
+}
+
+/**
+ * Footer links
+ */
+.footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease,
+                text-decoration var(--transition-speed) ease;
+}
+
+.footer-links a:hover {
+    color: var(--text-white);
+    text-decoration: underline;
+}
+
+/**
+ * Footer divider line
+ */
+.footer-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 30px 0;
+}
+
+/**
+ * Footer bottom information
+ */
+.footer-bottom {
+    font-size: 13px;
+    color: var(--text-lighter);
+    text-align: center;
+    padding-top: 0;
+}
+
+.footer-bottom strong {
+    color: var(--text-white);
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 40px 0 20px;
+    }
+    
+    .footer-title {
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .nav-item-custom {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 18px;
+    }
+    
+    .footer-title {
+        font-size: 14px;
+    }
+    
+    .footer-text {
+        font-size: 13px;
+    }
+}
